@@ -2,7 +2,6 @@ const NuestrosClientes = require("./NuestrosClientes.js");
 const Producto  = require("./Producto.js");
 const { Promociones, CLIENTES_COMERC } = require("./Promociones.js");
 
-
 //
 class ClienteComercial extends NuestrosClientes {
     #descuento;
@@ -20,23 +19,20 @@ class ClienteComercial extends NuestrosClientes {
     }
 
 // Procedimientos 
-    comprarProducto(prod, cant){
+    comprarProducto(prod, cant, fechaDia){
         console.log("Cliente: " + this.getNombreCliente() + " está comprando: " + cant + " unidad/es de: "+prod.getNombreProducto() );
         let desc = this.getDescuento();
-        console.log("DescCompraProd: "+desc);
+        console.log("DescCompraProd (Cliente Comercial): "+desc);
         let descPromos = 0;
         let promos = this.getPromociones();
         if (promos != null){
             for (let i=0; i<promos.length;i++) {
-                //console.log(promos[i].getNombrePromo());
-                descPromos += promos[i].calculaDescPromo(this, CLIENTES_COMERC, prod.getPrecioProducto(), cant, 0);
+                descPromos += promos[i].calculaDescPromo(this, CLIENTES_COMERC, prod.getPrecioProducto(), cant, 0, fechaDia);
             }            
         }
-        this._montoComprado += ((prod.getPrecioProducto())*cant)*(1-desc);
+        this._montoComprado += (((prod.getPrecioProducto())*cant)*(1-desc))-descPromos;
     }
-
 }
-
 
 
 module.exports = ClienteComercial;

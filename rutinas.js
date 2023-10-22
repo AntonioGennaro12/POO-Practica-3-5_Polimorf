@@ -1,12 +1,20 @@
-const {clientes} = require("./defClientes.js");
+const NuestrosClientes = require("./NuestrosClientes.js");
+const ClienteComercial = require("./ClienteComercial.js");
+const ClienteResidencial = require("./ClienteResidencial.js");
+const {misClientes} = require("./defClientes.js");
 const productos = require("./defProductos.js");
 const nuestrasPromos = require("./defPromociones.js");
-const NuestrosClientes = require("./NuestrosClientes.js");
+const { CLIENTES_COMERC, CLIENTES_RESID } = require("./Promociones.js");
 
 function reporteClientes() {
-    for(let i=0; i  <clientes.length; i++) {
-    clientes[i].montoGastado();
-    clientes[i].listadoDePromociones();
+    for(let i=0; i  <misClientes.length; i++) {
+        misClientes[i].montoGastado();
+        if (misClientes[i] instanceof ClienteResidencial) {
+            misClientes[i].listadoDePromociones(CLIENTES_RESID);
+        }
+        else {
+            misClientes[i].listadoDePromociones(CLIENTES_COMERC);
+        }
     }
 }
 

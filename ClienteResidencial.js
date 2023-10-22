@@ -18,14 +18,13 @@ class ClienteResidencial extends NuestrosClientes {
         return (this.#fechaCumpleanios);
     }
 
-    comprarProducto(prod, cant){
+    comprarProducto(prod, cant, fechaDia){
         console.log("Cliente: " + this.getNombreCliente() + " está comprando: " + cant + " unidad/es de: "+prod.getNombreProducto() );
         let descPromos = 0;
         let promos = this.getPromociones();
         if (promos != null){
             for (let i=0;i<promos.length;i++) {
-                //console.log(promos[i].getNombrePromo()); // cliente, clienteTipo, dato1, dato2, dato3
-                descPromos += promos[i].calculaDescPromo(this, CLIENTES_RESID, prod.getPrecioProducto(), cant, this.getFechaCumpleanios());
+                descPromos += promos[i].calculaDescPromo(this, CLIENTES_RESID, prod.getPrecioProducto(), cant, this.getFechaCumpleanios(), fechaDia);
             } 
         }
         this._montoComprado += (((prod.getPrecioProducto())*cant) - descPromos); 

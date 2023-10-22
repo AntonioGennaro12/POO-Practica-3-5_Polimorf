@@ -1,9 +1,9 @@
-const calcFechaDia = require("./calculaFechaDia.js");
-const misClientes = require("./defClientes.js");
-const productos = require("./defProductos.js");
-//
-
-/*
+// Función auxiliar...
+/**
+ * Calcula fecha del día y suma el nro de orden del día (comenzando en 0)
+ * @param {*} diaop 
+ * @returns 
+ */
 function calcFechaDia(diaop) {
     const fecha = new Date();
     let anio = fecha.getYear() + 1900;
@@ -45,43 +45,6 @@ function calcFechaDia(diaop) {
     // Combino día y mes en formato "ddmm"
     let ddmm = diaFormateado + mesFormateado;
     return (ddmm);
-} */
-
-class VentasDelDia {
-    #diaOpera;          // Dia de operación Comercial (1, 2, 3...etc) 
-    #ventaDia;         // producto[x], cantidad[y] a cliente[z] array tridimensional
-    #fecha;             // fecha del día de ventas
-
-    constructor (diaopera, venta) {
-        this.#diaOpera     = diaopera;   // nro de orden (inicia en 1)
-        this.#ventaDia     = [];    // array tridimensional
-        this.#fecha        = calcFechaDia(diaopera-1); // fecha del día más nro de orden   
-    }
-
-    setDiaOpera(dia) {
-        this.#diaOpera = dia;
-    }
-
-    getDiaOpera() {
-        return (this.#diaOpera);
-    }
-
-    getFechaDia() {
-        return (this.#fecha);
-    }
-
-    agregaVentaDia (prod, cant, client) {
-        let ventaD = [prod.getNombreProducto(), cant, client.getNombreCliente()];
-        this.#ventaDia.push(ventaD) ;   // pueden ser varias en el día
-        // ahora actualiza stock y cliente
-        prod.venderACliente (client, cant, this.#fecha);
-    }
-    
-    getVentaDia() {
-        console.log("Ventas día: "+this.#diaOpera+" Detalle: ");
-        console.table(this.#ventaDia);
-    }
-
 }
 
-module.exports = VentasDelDia;
+module.exports = calcFechaDia;

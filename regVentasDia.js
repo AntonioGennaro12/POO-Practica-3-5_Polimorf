@@ -1,4 +1,4 @@
-const { clientes, Juan, Pedro, Carlos, Luis, AlmacenDonPepe, MercadoTito } = require("./defClientes.js");
+const { misClientes, Juan, Pedro, Carlos, Luis, AlmacenDonPepe, MercadoTito } = require("./defClientes.js");
 const productos = require("./defProductos.js");
 //
 const ventasDia01   =   [   [productos[0],  1, Juan],               // Yerba  x1 a Juan

@@ -52,20 +52,20 @@ class PromocionMonto extends Promociones {
 
     calculaDescPromo(cliente, clienteTipo, dato1, dato2, dato3) {
         let descuento = 0;
-        if (checkUnicaVez(this, cliente, clienteTipo) === true)
+        if (checkUnicaVez(this, cliente, clienteTipo) === true) {
             return (descuento);
-        if (((dato1  * dato2) >= this.#datoDisparoPromo) && 
-            ((clienteTipo == super.getDirigidaA())||(super.getDirigidaA() == CLIENTES_TODOS))) {
+        }
+        if ((dato1  * dato2) >= this.#datoDisparoPromo) {
             descuento = dato1 * dato2 * this.#descuentoPremio;   
             cargaUnicaVez(this, cliente);
             // imprime operación
             console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+
-                        ", Tipo: "+clienteTipo+", Monto: "+dato1+" x "+dato2+", Desc. Aplicado: $"+descuento); 
+                        ", Tipo: "+clienteTipo+", Monto: "+dato1+"x"+dato2+", Desc. Aplicado: $"+descuento); 
             super.setMontoDescAcumulado (descuento);
             }
             else {
                 console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+", Tipo: "+clienteTipo+
-                ", Monto: "+dato1+" x "+dato2+", Desc. Aplicado: NO SE APLICÓ"); 
+                ", Monto: "+dato1+"x"+dato2+", Desc: NO LLEGA AL MONTO"); 
             } 
         return (descuento);                 
     }
@@ -91,20 +91,20 @@ class PromocionCantidad extends Promociones {
 
     calculaDescPromo(cliente, clienteTipo, dato1, dato2, dato3) {
         let descuento = 0;
-        if (checkUnicaVez(this, cliente, clienteTipo) === true)
+        if (checkUnicaVez(this, cliente, clienteTipo) === true) {
             return (descuento);
-        if ((dato2 >= this.#datoDisparoPromo) &&  
-            ((clienteTipo == this.getDirigidaA())||(this.getDirigidaA() == CLIENTES_TODOS))) {
+        }
+        if (dato2 >= this.#datoDisparoPromo) {
             descuento = dato1 * dato2 * this.#descuentoPremio;
         cargaUnicaVez(this, cliente);
         // imprime operación
         console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+
-                    ", Tipo: "+clienteTipo+", Monto: "+dato1+" x "+dato2+", Desc. Aplicado: $"+descuento); 
+                    ", Tipo: "+clienteTipo+", Monto: "+dato1+"x"+dato2+", Desc. Aplicado: $"+descuento); 
         super.setMontoDescAcumulado (descuento);
         }
         else {
             console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+", Tipo: "+clienteTipo+
-            ", Monto: "+dato1+" x "+dato2+", Desc. Aplicado: NO SE APLICÓ"); 
+            ", Monto: "+dato1+"x"+dato2+", Desc: NO LLEGA A LA CANTIDAD");  
         } 
         return (descuento); 
     }
@@ -130,20 +130,20 @@ class PromocionReintegro extends Promociones {
 
     calculaDescPromo(cliente, clienteTipo, dato1, dato2, dato3) {
         let descuento = 0;
-        if (checkUnicaVez(this, cliente, clienteTipo) === true)
+        if (checkUnicaVez(this, cliente, clienteTipo) === true) {
         return (descuento);
-        if (((dato1 * dato2) >= this.#datoDisparoPromo) &&
-            ((clienteTipo == this.getDirigidaA())||(this.getDirigidaA() == CLIENTES_TODOS))) {
+        }
+        if ((dato1 * dato2) >= this.#datoDisparoPromo) {
             descuento = this.#descuentoPremio;
         cargaUnicaVez(this, cliente);
         // imprime operación
         console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+
-                    ", Tipo: "+clienteTipo+", Monto: "+dato1+" x "+dato2+", Desc. Aplicado: $"+descuento); 
+                    ", Tipo: "+clienteTipo+", Monto: "+dato1+"x"+dato2+", Desc. Aplicado: $"+descuento); 
         super.setMontoDescAcumulado (descuento);
         }
         else {
             console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+", Tipo: "+clienteTipo+
-            ", Monto: "+dato1+" x "+dato2+", Desc. Aplicado: NO SE APLICÓ"); 
+            ", Monto: "+dato1+"x"+dato2+", Desc: NO LLEGA AL MONTO"); 
         } 
         return (descuento); 
     }
@@ -168,22 +168,20 @@ class PromocionFecha extends Promociones {
                     ", Desc/Premio: "+this.#descuentoPremio);
     }
 
-    calculaDescPromo(cliente, clienteTipo, dato1, dato2, dato3) {
+    calculaDescPromo(cliente, clienteTipo, dato1, dato2, dato3, fechaDia) {
         let descuento = 0;
-        if (checkUnicaVez(this, cliente, clienteTipo) === true)
+        if (checkUnicaVez(this, cliente, clienteTipo) === true) {
             return (descuento);
+        }
         let resultado = false;   
         if (this.getDisparadorPromo() == FECHA_CUMPLE) {
-            if (dato3 == this.getFechaDia()) { // compara fecha
-                if (clienteTipo == this.getDirigidaA()) {
+            if (dato3 == fechaDia) { // compara fecha
                     descuento = dato1 * dato2 * this.#descuentoPremio;
-                    console.log("DescCumple: "+descuento);
-                    resultado = true;                    
-                } 
+                    resultado = true;                
             }
         }
         else if (this.getDisparadorPromo() == MONTO_COMPRA) {
-              if (this.#datoAdicFecha == this.getFechaDia()) { // compara fecha
+              if (this.#datoAdicFecha == fechaDia) { // compara fecha
                 if ((dato1*dato2) >= this.#datoDisparoPromo) {
                     descuento = dato1 * dato2 * this.#descuentoPremio;
                     resultado = true; 
@@ -195,12 +193,12 @@ class PromocionFecha extends Promociones {
         cargaUnicaVez(this, cliente);                 
         // imprime operación
         console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+
-                    ", Tipo: "+clienteTipo+", Monto: "+dato1+" x "+dato2+", Desc. Aplicado: $"+descuento); 
+                    ", Tipo: "+clienteTipo+", Monto: "+dato1+"x"+dato2+", Desc. Aplicado: $"+descuento); 
         super.setMontoDescAcumulado (descuento);
         }
         else {
                 console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+", Tipo: "+clienteTipo+
-                ", Monto: "+dato1+" x "+dato2+", Desc. Aplicado: NO SE APLICÓ"); 
+                ", Monto: "+dato1+" x "+dato2+", Desc: NO ES LA FECHA");  
         } 
         return (descuento);             
     }

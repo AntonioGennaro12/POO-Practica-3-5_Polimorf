@@ -93,9 +93,9 @@ class Promociones {
     
 /// Procedimientos
     cualEstuNombreyDescripcion () {
-        console.log("Promoción: "+this.#nombrePromo+", Tipo: "+tiposPromo[this.#tipoPromo]+
-                ", Disparador: "+dispPromo[this.#disparadorPromo]+", Dirig. a: "+dirigidoPromo[this.#dirigidaA]+
-                ", Vigencia: "+vigenciaPromo[this.#vigenciaPromo]+", Desc. Acum.: "+this.#descAcumulado);
+        console.log("Prom.: "+this.#nombrePromo+", Tipo: "+tiposPromo[this.#tipoPromo]+
+                ", Disp.: "+dispPromo[this.#disparadorPromo]+", Dirig.: "+dirigidoPromo[this.#dirigidaA]+
+                ", Vig.: "+vigenciaPromo[this.#vigenciaPromo]+", DesAcc.: "+this.#descAcumulado);
     }
     
     /**

@@ -1,12 +1,9 @@
-const ClienteComercial = require("./ClienteComercial.js");
-const Producto  = require("./Producto.js");
 const { Promociones, 
     DESC_POR_MONTO, DESC_POR_CANTIDAD, REINTEGRO_FIJO, DESC_POR_FECHA, 
     MONTO_COMPRA, MONTO_COMPRADO, FECHA_CUMPLE, 
     CLIENTES_TODOS, CLIENTES_RESID, CLIENTES_COMERC,
     UNICA_VEZ, VIG_PERPETUA } = require("./Promociones.js");
 
-//const Producto  = require("./Producto.js");
 //
 class NuestrosClientes {
     #nombreCliente;    // nombre completo 
@@ -55,17 +52,13 @@ class NuestrosClientes {
  * @param {*} cant 
  */
     comprarProducto (prod, cant) {
-    //    let desc = this.getDescuento();
-    //    console.log("DescCompraProd: "+desc);
-    //    console.log("Cliente: " + this.#nombreCliente + " está comprando: " + cant + " unidad/es de: "+prod.getNombreProducto() );
-    //    this._montoComprado += ((prod.getPrecioProducto())*cant)*(1-desc); 
     }
        
     montoGastado () {
         console.log("Cliente: " + this.#nombreCliente+", lleva gastado: "+this._montoComprado);
     }
 
-    listadoDePromociones () {
+    listadoDePromociones (clienTipo) {
         if (this.#promosQueTiene == null) {
             console.log("Cliente: " + this.#nombreCliente+", No tiene Promociones!!!");
         }
@@ -73,13 +66,13 @@ class NuestrosClientes {
             let promosTotales = this.#promosQueTiene.length;
             let promosquetengo = 0;
             for (let i=0; i<promosTotales;i++ ) {
-                if ((this.#promosQueTiene[i].getDirigidaA() == CLIENTES_TODOS)|| (this.#promosQueTiene[i].getDirigidaA() == CLIENTES_RESID)) {
-                    //console.log("Promo Nro: "+(i+1)+" = "+this.#promosQueTiene[i].getNombrePromo());
+                if ((this.#promosQueTiene[i].getDirigidaA() == clienTipo) || 
+                    (this.#promosQueTiene[i].getDirigidaA() == CLIENTES_TODOS)) {
                     promosquetengo++;
                 }
             }
-            console.log("Cliente: " + this.#nombreCliente+", Tiene "+promosquetengo+" Promociones!!!");
-        }        
+            console.log("Cliente: " + this.#nombreCliente+", Tiene "+promosquetengo+" Promociones!!!");        
+        }
     }
 }
 

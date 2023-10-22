@@ -64,11 +64,11 @@ class Producto {
         console.log("Producto: "+this.getNombreProducto());
     }
 
-    venderACliente (clien, cant) {
+    venderACliente (clien, cant, fechaDia) {
         console.log("Producto: " + this.#nombreProducto + " vende: " + cant + 
                     " unidad/es a cliente: "+clien.getNombreCliente() );
         if (this.#cantidadStock >= cant) {
-            clien.comprarProducto (this, cant);
+            clien.comprarProducto (this, cant, fechaDia);
             this.setVendidoA((clien.getNombreCliente()), cant); 
             this.#cantidadStock -= cant;
             if (this.#cantidadStock <= this.#stockMinimo) {
