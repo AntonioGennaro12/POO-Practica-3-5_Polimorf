@@ -4,34 +4,6 @@ const { Promociones,
         CLIENTES_TODOS, CLIENTES_RESID, CLIENTES_COMERC,
         UNICA_VEZ, VIG_PERPETUA } = require("./Promociones");
 
-/**
- * Chequea si es por Unica Vez y si ya aplico la promo
- * @param {Object} este 
- * @param {Object} clien 
- * @param {Number} cliTip 
- * @returns true (ya fue otorgdo), false >> no es o ya fue otorgado
- */
-function checkUnicaVez(este, clien, cliTip) {
-    if (este.getVigenciaPromo() == UNICA_VEZ) { // Verifica si promo es por Unica Vez y ya fue Aplicada a este Cliente
-        if (este.verificaAplicadoA(clien.getNombreCliente())=== true) {
-            console.log("Aplica Promo: "+este.getNombrePromo()+", a Cliente: "+clien.getNombreCliente()+
-            ", Tipo: "+cliTip+", Desc. Aplicado: NO, YA FUE APLICADO UNA VEZ!!!"); 
-            return (true);  
-        }
-    }       
-    return (false);  
-}
-/**
- * Chequea si es por Unica Vez y carga el nombre del Cliente...
- * @param {*} este 
- * @param {*} clien 
- */
-function cargaUnicaVez(este, clien) {                 
-    if (este.getVigenciaPromo() == UNICA_VEZ) { // Verifica si promo es por Unica Vez y guarda nombre del cliente
-        este.setAplicadoA (clien.getNombreCliente());
-    } 
-}   
-
 // Subclase PromocionMonto
 class PromocionMonto extends Promociones {
     #datoDisparoPromo;  // umbral de disparo Monto o fecha ("ddmm")
@@ -52,12 +24,12 @@ class PromocionMonto extends Promociones {
 
     calculaDescPromo(cliente, clienteTipo, dato1, dato2, dato3) {
         let descuento = 0;
-        if (checkUnicaVez(this, cliente, clienteTipo) === true) {
+        if (super.checkUnicaVez(this, cliente, clienteTipo) === true) {
             return (descuento);
         }
         if ((dato1  * dato2) >= this.#datoDisparoPromo) {
             descuento = dato1 * dato2 * this.#descuentoPremio;   
-            cargaUnicaVez(this, cliente);
+            super.cargaUnicaVez(this, cliente);
             // imprime operación
             console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+
                         ", Tipo: "+clienteTipo+", Monto: "+dato1+"x"+dato2+", Desc. Aplicado: $"+descuento); 
@@ -91,12 +63,12 @@ class PromocionCantidad extends Promociones {
 
     calculaDescPromo(cliente, clienteTipo, dato1, dato2, dato3) {
         let descuento = 0;
-        if (checkUnicaVez(this, cliente, clienteTipo) === true) {
+        if (super.checkUnicaVez(this, cliente, clienteTipo) === true) {
             return (descuento);
         }
         if (dato2 >= this.#datoDisparoPromo) {
             descuento = dato1 * dato2 * this.#descuentoPremio;
-        cargaUnicaVez(this, cliente);
+            super.cargaUnicaVez(this, cliente);
         // imprime operación
         console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+
                     ", Tipo: "+clienteTipo+", Monto: "+dato1+"x"+dato2+", Desc. Aplicado: $"+descuento); 
@@ -130,12 +102,12 @@ class PromocionReintegro extends Promociones {
 
     calculaDescPromo(cliente, clienteTipo, dato1, dato2, dato3) {
         let descuento = 0;
-        if (checkUnicaVez(this, cliente, clienteTipo) === true) {
+        if (super.checkUnicaVez(this, cliente, clienteTipo) === true) {
         return (descuento);
         }
         if ((dato1 * dato2) >= this.#datoDisparoPromo) {
             descuento = this.#descuentoPremio;
-        cargaUnicaVez(this, cliente);
+            super.cargaUnicaVez(this, cliente);
         // imprime operación
         console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+
                     ", Tipo: "+clienteTipo+", Monto: "+dato1+"x"+dato2+", Desc. Aplicado: $"+descuento); 
@@ -170,7 +142,7 @@ class PromocionFecha extends Promociones {
 
     calculaDescPromo(cliente, clienteTipo, dato1, dato2, dato3, fechaDia) {
         let descuento = 0;
-        if (checkUnicaVez(this, cliente, clienteTipo) === true) {
+        if (super.checkUnicaVez(this, cliente, clienteTipo) === true) {
             return (descuento);
         }
         let resultado = false;   
@@ -190,7 +162,7 @@ class PromocionFecha extends Promociones {
         }                
 
         if (resultado === true) { 
-        cargaUnicaVez(this, cliente);                 
+            super.cargaUnicaVez(this, cliente);                 
         // imprime operación
         console.log("Aplica Promo: "+this.getNombrePromo()+", a Cliente: "+cliente.getNombreCliente()+
                     ", Tipo: "+clienteTipo+", Monto: "+dato1+"x"+dato2+", Desc. Aplicado: $"+descuento); 

@@ -113,6 +113,35 @@ class Promociones {
     }
 
     /**
+     * Chequea si es por Unica Vez y si ya aplico la promo
+     * @param {Object} promo 
+     * @param {Object} clien 
+     * @param {Number} cliTip 
+     * @returns true (ya fue otorgdo), false >> no es o ya fue otorgado
+     */
+    checkUnicaVez(promo, clien, cliTip) {
+        if (promo.getVigenciaPromo() == UNICA_VEZ) { // Verifica si promo es por Unica Vez y ya fue Aplicada a este Cliente
+            if (promo.verificaAplicadoA(clien.getNombreCliente())=== true) {
+                console.log("Aplica Promo: "+promo.getNombrePromo()+", a Cliente: "+clien.getNombreCliente()+
+                ", Tipo: "+cliTip+", Desc. Aplicado: NO, YA FUE APLICADO UNA VEZ!!!"); 
+                return (true);  
+            }
+        }       
+        return (false);  
+    }
+
+    /**
+     * Chequea si es por Unica Vez y carga el nombre del Cliente...
+     * @param {*} promo 
+     * @param {*} clien 
+     */
+    cargaUnicaVez(promo, clien) {                 
+        if (promo.getVigenciaPromo() == UNICA_VEZ) { // Verifica si promo es por Unica Vez y guarda nombre del cliente
+            promo.setAplicadoA (clien.getNombreCliente());
+        } 
+    }   
+
+    /**
      * Devuelve día y mes
      * @returns String "ddmm"
      */
